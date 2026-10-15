@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackForge Academy // Ethical Hacking & Cyber Defense Platform</title>
+  <meta name="description" content="Interactive ethical hacking and cybersecurity learning academy for students. Master penetration testing, SQL injection, XSS, network analysis, cryptography, and defensive remediation in browser-based labs.">
+  <meta name="theme-color" content="#060911">
+
+  <!-- Google Fonts: Space Grotesk, JetBrains Mono, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Cyber Overlays -->
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="main-nav">
+    <div class="container nav-container">
+      <div class="brand" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <div class="brand-icon">
+          <img src="assets/images/shield-logo.jpg" alt="HackForge Academy Shield Logo">
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">HACKFORGE <span style="color:var(--neon-cyan)">//</span> LABS</span>
+          <span class="brand-tag"><span class="status-dot"></span> SIMULATION ACTIVE</span>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li><a href="#dashboard" class="nav-link active" data-target="dashboard">Dashboard</a></li>
+          <li><a href="#labs" class="nav-link" data-target="labs">Interactive Labs</a></li>
+          <li><a href="#ctf-arena" class="nav-link" data-target="ctf-arena">CTF Arena</a></li>
+          <li><a href="#curriculum" class="nav-link" data-target="curriculum">Curriculum</a></li>
+          <li><a href="#defend" class="nav-link" data-target="defend">Defend & Fix</a></li>
+          <li><a href="#field-manual" class="nav-link" data-target="field-manual">Field Manual</a></li>
+          <li><a href="#certificate" class="nav-link" data-target="certificate">Certificate</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-stats">
+        <div class="xp-badge" title="Student Experience & Level">
+          <span class="xp-level" id="nav-user-level">LVL 1</span>
+          <div class="xp-bar-container">
+            <div class="xp-bar-fill" id="nav-xp-fill"></div>
+          </div>
+          <span class="xp-text" id="nav-xp-text">0 XP</span>
+        </div>
+
+        <button class="sound-toggle-btn active" id="sound-toggle" title="Toggle Audio Sound FX">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container">
+
+    <!-- ====================================================================
+         HERO SECTION / DASHBOARD
+         ==================================================================== -->
+    <section class="hero-section" id="dashboard">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-tag">
+            <span>⚡ ACADEMY CYBER RANGE v2.4</span>
+            <span>•</span>
+            <span>ZERO SETUP REQUIRED</span>
+          </div>
+          <h1 class="hero-title">
+            Learn Ethical Hacking by <span class="highlight">Hands-On Practice</span>.
+          </h1>
+          <p class="hero-desc">
+            Master penetration testing, web vulnerabilities, network reconnaissance, and secure software defense inside isolated interactive browser sandboxes. Built for aspiring security engineers and students.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#labs" class="btn btn-primary" onclick="document.getElementById('labs').scrollIntoView({behavior: 'smooth'})">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              Launch Interactive Labs
+            </a>
+            <a href="#ctf-arena" class="btn btn-secondary" onclick="document.getElementById('ctf-arena').scrollIntoView({behavior: 'smooth'})">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              Capture The Flag (CTF)
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual-card">
+          <div class="hologram-wrapper">
+            <img src="assets/images/shield-logo.jpg" alt="Cyber Shield Neural Protection" class="hologram-img">
+          </div>
+          <div class="hero-metrics-grid">
+            <div class="metric-pill">
+              <div class="metric-val" id="stat-total-xp">0</div>
+              <div class="metric-label">Total XP</div>
+            </div>
+            <div class="metric-pill">
+              <div class="metric-val" id="stat-flags-count">0/6</div>
+              <div class="metric-label">Flags Captured</div>
+            </div>
+            <div class="metric-pill">
+              <div class="metric-val" id="stat-rank-title" style="font-size:0.85rem; padding-top:4px;">Cadet Trainee</div>
+              <div class="metric-label">Rank</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ETHICAL HACKER PLEDGE / OATH
+         ==================================================================== -->
+    <aside class="oath-banner" id="oath-banner" aria-label="Ethical Hacking Oath">
+      <div class="oath-content">
+        <div class="oath-icon">⚖️</div>
+        <div>
+          <div class="oath-title">
+            <span>The Hacker's Code of Ethics</span>
+            <span style="font-size: 0.75rem; color: var(--neon-amber); font-family: var(--font-mono);">[MANDATORY FOUNDATION]</span>
+          </div>
+          <p class="oath-desc">
+            "I pledge to use my security skills exclusively for defense, authorization-compliant testing, and educational enlightenment. I will never target systems without explicit permission, nor cause harm or data loss."
+          </p>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="sign-oath-btn" style="white-space:nowrap;">
+        Sign Ethical Oath (+50 XP)
+      </button>
+    </aside>
+
+    <!-- ====================================================================
+         INTERACTIVE LABS SECTION
+         ==================================================================== -->
+    <section class="section" id="labs">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">PRACTICAL CYBER RANGE</div>
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-cyan)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            Interactive Hacking Sandboxes
+          </h2>
+          <p class="section-subtitle">Real-time simulated environments with live vulnerability inspection and remediation.</p>
+        </div>
+
+        <!-- Tab Selector for Labs -->
+        <div class="tab-pills" role="tablist">
+          <button class="tab-pill lab-tab-pill active" data-lab="sqli" role="tab">💉 SQL Injection</button>
+          <button class="tab-pill lab-tab-pill" data-lab="xss" role="tab">⚡ Cross-Site Scripting</button>
+          <button class="tab-pill lab-tab-pill" data-lab="terminal" role="tab">💻 Kali Web Terminal</button>
+          <button class="tab-pill lab-tab-pill" data-lab="crypto" role="tab">🔐 Cryptography Vault</button>
+          <button class="tab-pill lab-tab-pill" data-lab="sniffer" role="tab">📡 Packet Sniffer</button>
+        </div>
+      </div>
+
+      <!-- 1. SQL Injection Lab Pane -->
+      <div class="lab-pane" id="lab-pane-sqli">
+        <div class="lab-card">
+          <div class="lab-header">
+            <div class="lab-title-group">
+              <span class="lab-badge difficulty-easy">OWASP A03: INJECTION</span>
+              <h3>SQL Injection (SQLi) Laboratory</h3>
+            </div>
+            <div id="sqli-mode-status" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--neon-red); font-weight:bold;">
+              MODE: STRING CONCATENATION (VULNERABLE)
+            </div>
+          </div>
+
+          <div class="lab-body">
+            <div class="lab-split-view">
+              <!-- Left: Target Simulated Portal -->
+              <div class="mock-browser">
+                <div class="mock-browser-bar">
+                  <div class="browser-dots">
+                    <div class="browser-dot red"></div>
+                    <div class="browser-dot yellow"></div>
+                    <div class="browser-dot green"></div>
+                  </div>
+                  <div class="browser-url-input">https://internal.portal.local/admin-login.php</div>
+                </div>
+
+                <div class="mock-browser-viewport">
+                  <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Acme Corp Staff Gateway</h4>
+                  <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 16px;">
+                    Target: Bypass this authentication portal using SQL tautology or union techniques to extract administrative credentials.
+                  </p>
+
+                  <form id="sqli-form" onsubmit="return false;">
+                    <div class="cyber-input-group">
+                      <label class="cyber-label" for="sqli-user-input">Username / Query:</label>
+                      <input type="text" id="sqli-user-input" class="cyber-input" value="admin" autocomplete="off">
+                    </div>
+
+                    <div class="cyber-input-group">
+                      <label class="cyber-label" for="sqli-pass-input">Password:</label>
+                      <input type="password" id="sqli-pass-input" class="cyber-input" value="••••••" autocomplete="off">
+                    </div>
+
+                    <div style="margin-bottom: 14px;">
+                      <span class="cyber-label">Quick Exploit Payloads:</span>
+                      <div class="payload-chips">
+                        <button type="button" class="chip-btn sqli-payload-chip" data-payload="' OR '1'='1' --">Auth Bypass: ' OR '1'='1' --</button>
+                        <button type="button" class="chip-btn sqli-payload-chip" data-payload="' OR 1=1 #">Bypass (Hash): ' OR 1=1 #</button>
+                        <button type="button" class="chip-btn sqli-payload-chip" data-payload="' UNION SELECT 1, 'admin', 'FLAG', 'root' --">UNION Extraction</button>
+                      </div>
+                    </div>
+
+                    <button type="button" id="sqli-submit-btn" class="btn btn-primary" style="width: 100%;">
+                      ⚡ Send Authentication Query
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Right: Backend Query Visualizer -->
+              <div class="mock-backend-inspector">
+                <div class="inspector-header">
+                  <span>BACKEND SQL EXECUTION PIPELINE</span>
+                  <span>PHP 8.1 / MySQL 8.0</span>
+                </div>
+
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 8px;">
+                  Observe how your input string manipulates the SQL statement in server memory:
+                </p>
+
+                <div class="code-viewer" id="sqli-query-viewer">
+                  <!-- Real-time syntax highlighted SQL -->
+                </div>
+
+                <div class="remedy-toggle-bar">
+                  <div style="font-size:0.8rem;">
+                    <strong>Enable Defense:</strong> Parameterized Prepared Statements
+                  </div>
+                  <label class="switch" title="Toggle Prepared Statements">
+                    <input type="checkbox" id="sqli-secure-toggle">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="exploit-output" id="sqli-result-box" style="margin-top: 14px;">
+                  Query execution idle. Input an exploit payload on the left to test.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. XSS Sandbox Pane -->
+      <div class="lab-pane" id="lab-pane-xss" style="display:none;">
+        <div class="lab-card">
+          <div class="lab-header">
+            <div class="lab-title-group">
+              <span class="lab-badge difficulty-med">OWASP A03: XSS</span>
+              <h3>Cross-Site Scripting (XSS) Sandbox</h3>
+            </div>
+            <div id="xss-mode-status" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--neon-red); font-weight:bold;">
+              DEFENSE: DISABLED (RAW DANGEROUS INNERHTML)
+            </div>
+          </div>
+
+          <div class="lab-body">
+            <div class="lab-split-view">
+              <!-- Left: Target Guestbook Application -->
+              <div class="mock-browser">
+                <div class="mock-browser-bar">
+                  <div class="browser-dots">
+                    <div class="browser-dot red"></div>
+                    <div class="browser-dot yellow"></div>
+                    <div class="browser-dot green"></div>
+                  </div>
+                  <div class="browser-url-input">https://social.internal.local/guestbook</div>
+                </div>
+
+                <div class="mock-browser-viewport">
+                  <h4 style="margin-bottom: 8px;">Employee Bulletin Feed</h4>
+                  <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 14px;">
+                    This bulletin board renders user comments directly. Test for Stored XSS by injecting JavaScript script tags or inline image event handlers.
+                  </p>
+
+                  <div class="cyber-input-group">
+                    <label class="cyber-label" for="xss-post-input">New Message:</label>
+                    <input type="text" id="xss-post-input" class="cyber-input" placeholder="Enter greeting or test payload..." autocomplete="off">
+                  </div>
+
+                  <div style="margin-bottom: 12px;">
+                    <span class="cyber-label">Test XSS Payloads:</span>
+                    <div class="payload-chips">
+                      <button type="button" class="chip-btn xss-payload-chip" data-payload="<script>alert('XSS_Executed')</script>">&lt;script&gt;alert(1)&lt;/script&gt;</button>
+                      <button type="button" class="chip-btn xss-payload-chip" data-payload="<img src=invalid onerror=alert('Cookie_Stolen')>">&lt;img onerror=alert()&gt;</button>
+                      <button type="button" class="chip-btn xss-payload-chip" data-payload="<b onmouseover=alert(1)>Hover Me</b>">&lt;b onmouseover&gt;</button>
+                    </div>
+                  </div>
+
+                  <button type="button" id="xss-post-btn" class="btn btn-primary" style="width: 100%; margin-bottom: 16px;">
+                    Post Message to Feed
+                  </button>
+
+                  <h5 style="font-size:0.85rem; color:var(--neon-cyan); margin-bottom: 8px;">Live Feed Posts:</h5>
+                  <div id="xss-comments-list" style="max-height: 140px; overflow-y: auto;">
+                    <div style="padding: 8px 12px; margin-bottom: 6px; background:#0a101f; border-radius:6px; border:1px solid var(--border-subtle); font-size:0.85rem;">
+                      <div style="font-size:0.7rem; color:var(--text-muted); margin-bottom:2px;">Moderator (System)</div>
+                      <div>Welcome to the community board! Please post your notes here.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: XSS Execution & Remediation Inspector -->
+              <div class="mock-backend-inspector">
+                <div class="inspector-header">
+                  <span>BROWSER RENDERING ENGINE</span>
+                  <span>DOMPURIFY & ENCODING</span>
+                </div>
+
+                <div class="remedy-toggle-bar" style="margin-top: 0; margin-bottom: 14px;">
+                  <div style="font-size:0.8rem;">
+                    <strong>Enable Defense:</strong> HTML Entity Encoding (htmlspecialchars)
+                  </div>
+                  <label class="switch" title="Toggle Sanitization">
+                    <input type="checkbox" id="xss-sanitize-toggle">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div style="font-size:0.85rem; line-height: 1.6; color:#cbd5e1; margin-bottom: 12px;">
+                  <strong>Why XSS is Critical:</strong>
+                  When untrusted input is interpreted as code by the browser, attackers can hijack session tokens (<code>document.cookie</code>), redirect users to credential harvesting phishing pages, or perform actions on their behalf.
+                </div>
+
+                <div class="code-viewer">
+<span class="sql-comment">// Insecure Frontend code:</span>
+element.<span class="sql-userinput">innerHTML</span> = userInput; <span class="sql-comment">// DANGEROUS!</span>
+
+<span class="sql-comment">// Secure Remediation:</span>
+element.<span class="sql-keyword">textContent</span> = userInput; <span class="sql-comment">// Treated purely as text!</span>
+                </div>
+
+                <!-- Simulated Browser Alert Modal -->
+                <div id="xss-simulated-alert" style="display:none; flex-direction:column; background:rgba(239,68,68,0.15); border:1px solid var(--neon-red); padding:14px; border-radius:6px; margin-top: auto;">
+                  <div style="font-weight:bold; color:var(--neon-red); margin-bottom:4px;">⚠️ SIMULATED XSS ALERT POPUP</div>
+                  <div id="xss-alert-msg" style="font-family:var(--font-mono); font-size:0.8rem; margin-bottom:8px;"></div>
+                  <div id="xss-flag-notice" style="font-size:0.85rem; color:var(--neon-green); margin-bottom:8px;"></div>
+                  <button type="button" class="btn btn-sm btn-secondary" id="close-xss-modal-btn" style="align-self:flex-start;">Dismiss Alert</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Kali Web Terminal Pane -->
+      <div class="lab-pane" id="lab-pane-terminal" style="display:none;">
+        <div class="terminal-wrapper">
+          <div class="terminal-header">
+            <div class="terminal-title">
+              <span class="browser-dot green"></span>
+              <span>student@hackforge-box: ~ (Kali Linux CLI Pentest Sandbox)</span>
+            </div>
+            <div class="terminal-actions">
+              <button class="term-action-btn" id="term-btn-clear">clear</button>
+              <button class="term-action-btn" id="term-btn-reset">reset</button>
+            </div>
+          </div>
+
+          <div class="terminal-screen" id="terminal-screen">
+            <!-- Dynamic terminal lines -->
+          </div>
+
+          <div class="terminal-quick-cmds">
+            <span style="font-size:0.75rem; color:var(--neon-cyan); margin-right:4px;">Quick Run:</span>
+            <button class="quick-cmd-btn" data-cmd="nmap 10.10.14.88">nmap 10.10.14.88</button>
+            <button class="quick-cmd-btn" data-cmd="nmap -sV 10.10.14.88">nmap -sV 10.10.14.88</button>
+            <button class="quick-cmd-btn" data-cmd="curl http://10.10.14.88/robots.txt">curl .../robots.txt</button>
+            <button class="quick-cmd-btn" data-cmd="cat /admin_vault_backup_2024/flag.txt">cat flag.txt</button>
+            <button class="quick-cmd-btn" data-cmd="hashcat -m 0 hash.txt rockyou.txt">hashcat -m 0</button>
+            <button class="quick-cmd-btn" data-cmd="matrix">matrix</button>
+          </div>
+
+          <div style="background:#04070e; padding:8px 16px; display:flex; align-items:center; border-top:1px solid #111a2e;">
+            <span class="terminal-prompt" id="terminal-prompt">student@hackforge-box:~$ </span>
+            <input type="text" class="terminal-input" id="terminal-input" autofocus spellcheck="false" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Cryptography Studio Pane -->
+      <div class="lab-pane" id="lab-pane-crypto" style="display:none;">
+        <div class="lab-card">
+          <div class="lab-header">
+            <div class="lab-title-group">
+              <span class="lab-badge difficulty-easy">CRYPTANALYSIS</span>
+              <h3>Cryptography & Ciphers Studio</h3>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--neon-cyan);">
+              CAESAR / BASE64 / HASH CALCULATOR
+            </div>
+          </div>
+
+          <div class="lab-body">
+            <div class="lab-split-view">
+              <!-- Caesar Cipher Rotor Tool -->
+              <div style="background:#090e1a; border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:18px;">
+                <h4 style="font-size:1.05rem; margin-bottom:12px; color:var(--neon-cyan);">Caesar Cipher Rotor</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:14px;">
+                  Classical substitution cipher. Adjust the key shift slider to encrypt or decrypt messages in real time.
+                </p>
+
+                <div class="cyber-input-group">
+                  <label class="cyber-label" for="caesar-input">Input Ciphertext / Plaintext:</label>
+                  <input type="text" id="caesar-input" class="cyber-input" value="IODJ{fdhvdu_urs_f1sk3u_cr4ck3d}">
+                </div>
+
+                <div style="margin-bottom:14px;">
+                  <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:6px;">
+                    <span>Shift Key:</span>
+                    <strong style="color:var(--neon-cyan);" id="caesar-shift-val">3</strong>
+                  </div>
+                  <input type="range" id="caesar-shift" min="-25" max="25" value="3" style="width:100%; accent-color:var(--neon-cyan);">
+                </div>
+
+                <div class="cyber-input-group">
+                  <label class="cyber-label" for="caesar-output">Decoded / Shifted Result:</label>
+                  <input type="text" id="caesar-output" class="cyber-input" readonly style="color:var(--neon-green); font-weight:bold;">
+                </div>
+
+                <button class="btn btn-sm btn-secondary" id="caesar-brute-btn" style="margin-top:6px;">
+                  🔍 Brute-Force All 25 Rotations
+                </button>
+                <div id="caesar-brute-table" style="max-height:140px; overflow-y:auto; margin-top:10px; display:none; background:#04070e; padding:8px; border-radius:4px; border:1px solid var(--border-subtle);"></div>
+              </div>
+
+              <!-- Base64 & Hash Inspection -->
+              <div style="background:#090e1a; border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:18px;">
+                <h4 style="font-size:1.05rem; margin-bottom:12px; color:var(--neon-purple);">Base64 & Hash Inspector</h4>
+
+                <div class="cyber-input-group">
+                  <label class="cyber-label" for="b64-input">Base64 Text / Raw String:</label>
+                  <input type="text" id="b64-input" class="cyber-input" value="SGFja0ZvcmdlIEFjYWRlbXk=">
+                </div>
+
+                <div style="display:flex; gap:8px; margin-bottom:14px;">
+                  <button class="btn btn-sm btn-primary" id="b64-encode-btn">Encode Base64</button>
+                  <button class="btn btn-sm btn-secondary" id="b64-decode-btn">Decode Base64</button>
+                </div>
+
+                <div class="cyber-input-group">
+                  <label class="cyber-label" for="b64-output">Converted Output:</label>
+                  <input type="text" id="b64-output" class="cyber-input" readonly>
+                </div>
+
+                <hr style="border:0; border-top:1px solid var(--border-subtle); margin:16px 0;">
+
+                <div class="cyber-input-group">
+                  <label class="cyber-label" for="hash-calc-input">Live One-Way Hash Generator:</label>
+                  <input type="text" id="hash-calc-input" class="cyber-input" placeholder="Type text to generate MD5 & SHA-256..." value="password">
+                </div>
+
+                <div style="font-family:var(--font-mono); font-size:0.75rem; background:#050811; padding:10px; border-radius:4px; border:1px solid var(--border-subtle);">
+                  <div style="color:var(--text-muted); margin-bottom:4px;">MD5 (Insecure):</div>
+                  <div id="hash-md5-display" style="color:var(--neon-amber); margin-bottom:8px; word-break:break-all;">5f4dcc3b5aa765d61d8327deb882cf99</div>
+                  <div style="color:var(--text-muted); margin-bottom:4px;">SHA-256 (Modern Standard):</div>
+                  <div id="hash-sha256-display" style="color:var(--neon-cyan); word-break:break-all;">5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Packet Sniffer Pane -->
+      <div class="lab-pane" id="lab-pane-sniffer" style="display:none;">
+        <div class="lab-card">
+          <div class="lab-header">
+            <div class="lab-title-group">
+              <span class="lab-badge difficulty-med">NETWORK TRAFFIC ANALYSIS</span>
+              <h3>Packet Sniffer Lab (Mini-Wireshark)</h3>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="term-action-btn packet-filter-btn active" data-filter="ALL">ALL</button>
+              <button class="term-action-btn packet-filter-btn" data-filter="FTP">FTP (Plaintext)</button>
+              <button class="term-action-btn packet-filter-btn" data-filter="HTTP">HTTP</button>
+              <button class="term-action-btn packet-filter-btn" data-filter="HTTPS">HTTPS (Encrypted)</button>
+              <button class="term-action-btn packet-filter-btn" data-filter="DNS">DNS</button>
+            </div>
+          </div>
+
+          <div class="lab-body">
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">
+              Promiscuous network capture on interface <code>eth0</code>. Click any packet row to inspect its dissecting headers and raw hex stream to discover unencrypted cleartext passwords!
+            </p>
+
+            <div class="packet-table-wrapper">
+              <table class="packet-table">
+                <thead>
+                  <tr>
+                    <th style="width:40px;">No.</th>
+                    <th style="width:70px;">Time</th>
+                    <th style="width:120px;">Source</th>
+                    <th style="width:120px;">Destination</th>
+                    <th style="width:80px;">Protocol</th>
+                    <th style="width:60px;">Length</th>
+                    <th>Info Summary</th>
+                  </tr>
+                </thead>
+                <tbody id="packet-tbody">
+                  <!-- Dynamic Packet Rows -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="packet-detail-view" id="packet-detail-box">
+              <div style="color:var(--neon-cyan); font-weight:bold; margin-bottom:4px;">Packet Dissector View:</div>
+              <div id="packet-detail-content" style="color:#cbd5e1; white-space:pre-wrap;">Select a packet from the table above to analyze protocols and uncover payload contents.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CAPTURE THE FLAG (CTF) ARENA
+         ==================================================================== -->
+    <section class="section" id="ctf-arena">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">COMPETITIVE DRILLS</div>
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-amber)" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+            Capture The Flag (CTF) Arena
+          </h2>
+          <p class="section-subtitle">Real-world simulated challenges. Uncover secrets, solve flags in format <code>FLAG{...}</code>, and climb the scoreboard.</p>
+        </div>
+      </div>
+
+      <div class="ctf-grid" id="ctf-challenges-grid">
+        <!-- CTF Challenge Cards injected by ctf.js -->
+      </div>
+
+      <!-- Live Simulated Scoreboard -->
+      <div style="margin-top:36px; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px;">
+        <h3 style="font-size:1.15rem; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+          <span>🏆 Student Cadre Leaderboard</span>
+          <span style="font-size:0.75rem; color:var(--neon-cyan); font-family:var(--font-mono);">[LIVE STANDINGS]</span>
+        </h3>
+        <div id="ctf-scoreboard-list">
+          <!-- Dynamic Leaderboard Rows -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CURRICULUM LEARNING TRACKS
+         ==================================================================== -->
+    <section class="section" id="curriculum">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">STRUCTURED EDUCATION</div>
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Curriculum Tracks & Knowledge Base
+          </h2>
+          <p class="section-subtitle">In-depth modules covering cyber ethics, law, network theory, and defensive hardening.</p>
+        </div>
+      </div>
+
+      <div class="curriculum-grid">
+        <div class="module-nav-list" id="curriculum-module-list">
+          <!-- Module nav items injected by curriculum.js -->
+        </div>
+
+        <div class="curriculum-content-panel" id="curriculum-article-panel">
+          <!-- Active module article and quiz injected by curriculum.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         DEFEND & REMEDIATE CODE WORKBENCH
+         ==================================================================== -->
+    <section class="section" id="defend">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">BLUE TEAM ENGINEERING</div>
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-cyan)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Defend & Remediate: Code Workbench
+          </h2>
+          <p class="section-subtitle">Real ethical hackers know how to fix vulnerabilities. Compare vulnerable vs patched code side by side.</p>
+        </div>
+
+        <div class="tab-pills" id="defend-scenario-selector">
+          <!-- Injected by defend.js -->
+        </div>
+      </div>
+
+      <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div>
+            <h3 id="defend-title" style="font-size:1.25rem;">Vulnerability</h3>
+            <div id="defend-cwe" style="font-size:0.8rem; color:var(--neon-amber); font-family:var(--font-mono);"></div>
+          </div>
+        </div>
+
+        <div class="defend-grid">
+          <div class="defend-box vulnerable">
+            <div class="defend-header">
+              <span style="color:var(--neon-red); font-weight:bold;">❌ VULNERABLE IMPLEMENTATION</span>
+              <span>INSECURE</span>
+            </div>
+            <pre class="defend-code" id="defend-vuln-code"></pre>
+          </div>
+
+          <div class="defend-box patched">
+            <div class="defend-header">
+              <span style="color:var(--neon-green); font-weight:bold;">✅ PATCHED & SECURE CODE</span>
+              <span>DEFENDED</span>
+            </div>
+            <pre class="defend-code" id="defend-patch-code"></pre>
+          </div>
+        </div>
+
+        <!-- Interactive Exploit Execution Simulator -->
+        <div style="margin-top:20px; background:#070b14; border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:16px;">
+          <h4 style="font-size:0.95rem; margin-bottom:10px;">🧪 Test Attack Vector Against Both Implementations</h4>
+          <div style="display:flex; gap:12px; margin-bottom:14px; flex-wrap:wrap;">
+            <input type="text" id="defend-sim-input" class="cyber-input" style="flex:1; min-width:260px;" readonly>
+            <button class="btn btn-sm btn-secondary" id="defend-run-vuln-btn" style="border-color:var(--neon-red); color:var(--neon-red);">
+              Attack Vulnerable Target
+            </button>
+            <button class="btn btn-sm btn-outline-green" id="defend-run-patch-btn">
+              Attack Patched Target
+            </button>
+          </div>
+          <div id="defend-sim-result" class="exploit-output"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PENTESTER'S FIELD MANUAL & CHEAT SHEET
+         ==================================================================== -->
+    <section class="section" id="field-manual">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">REFERENCE LIBRARY</div>
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            Pentester Field Manual & Cheatsheet
+          </h2>
+          <p class="section-subtitle">Quick reference handbook for protocols, ports, and essential penetration testing commands.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+        <!-- Card 1: Well Known Ports -->
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:20px;">
+          <h4 style="color:var(--neon-cyan); margin-bottom:12px; font-size:1.05rem;">🌐 Critical Ports & Services</h4>
+          <table style="width:100%; border-collapse:collapse; font-size:0.8rem; font-family:var(--font-mono);">
+            <tr style="border-bottom:1px solid var(--border-subtle); color:var(--text-muted);"><th style="text-align:left; padding:4px;">PORT</th><th style="text-align:left; padding:4px;">SERVICE</th><th style="text-align:left; padding:4px;">NOTE</th></tr>
+            <tr><td style="padding:4px; color:var(--neon-cyan);">21</td><td>FTP</td><td>Cleartext credentials</td></tr>
+            <tr><td style="padding:4px; color:var(--neon-cyan);">22</td><td>SSH</td><td>Encrypted remote shell</td></tr>
+            <tr><td style="padding:4px; color:var(--neon-cyan);">25</td><td>SMTP</td><td>Mail transfer protocol</td></tr>
+            <tr><td style="padding:4px; color:var(--neon-cyan);">53</td><td>DNS</td><td>Zone transfers (AXFR)</td></tr>
+            <tr><td style="padding:4px; color:var(--neon-cyan);">80 / 443</td><td>HTTP/S</td><td>Web applications</td></tr>
+            <tr><td style="padding:4px; color:var(--neon-cyan);">3306</td><td>MySQL</td><td>Default database</td></tr>
+            <tr><td style="padding:4px; color:var(--neon-cyan);">3389</td><td>RDP</td><td>Windows Remote Desktop</td></tr>
+          </table>
+        </div>
+
+        <!-- Card 2: Nmap Cheatsheet -->
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:20px;">
+          <h4 style="color:var(--neon-green); margin-bottom:12px; font-size:1.05rem;">⚡ Nmap Scan Handbook</h4>
+          <div style="font-family:var(--font-mono); font-size:0.78rem; line-height:1.7;">
+            <div><code>nmap -sS target</code> - Stealth SYN Scan</div>
+            <div><code>nmap -sV target</code> - Service version detection</div>
+            <div><code>nmap -A target</code> - OS, version, traceroute, script</div>
+            <div><code>nmap -p- target</code> - Scan all 65,535 TCP ports</div>
+            <div><code>nmap -p 80,443 target</code> - Scan specific target ports</div>
+            <div><code>nmap -Pn target</code> - Disable host ping discovery</div>
+          </div>
+        </div>
+
+        <!-- Card 3: Linux Command QuickRef -->
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:20px;">
+          <h4 style="color:var(--neon-amber); margin-bottom:12px; font-size:1.05rem;">💻 Linux Pentest Commands</h4>
+          <div style="font-family:var(--font-mono); font-size:0.78rem; line-height:1.7;">
+            <div><code>whoami & id</code> - Current user & group privileges</div>
+            <div><code>grep -r "password" /var/www</code> - Search recursively</div>
+            <div><code>find / -perm -4000 2>/dev/null</code> - Find SUID binaries</div>
+            <div><code>netstat -tuln</code> - View listening network sockets</div>
+            <div><code>curl -I http://ip</code> - Inspect HTTP headers & banner</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         STUDENT CERTIFICATE OF COMPLETION
+         ==================================================================== -->
+    <section class="section" id="certificate">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">CREDENTIAL VALIDATION</div>
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-cyan)" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            Student Certificate of Completion
+          </h2>
+          <p class="section-subtitle">Earn recognition for ethical hacking drills, laboratory completions, and capture-the-flag victories.</p>
+        </div>
+      </div>
+
+      <div class="cert-section-wrapper">
+        <div style="display:flex; justify-content:center; gap:12px; margin-bottom:28px; flex-wrap:wrap; align-items:center;">
+          <input type="text" id="cert-name-input" class="cyber-input" style="max-width:280px;" placeholder="Student Full Name">
+          <button class="btn btn-primary" id="update-name-btn">Update Name</button>
+          <button class="btn btn-secondary" id="print-cert-btn">
+            🖨️ Print / Download PDF
+          </button>
+          <button class="btn btn-sm btn-secondary" id="reset-progress-btn" style="color:var(--neon-red); border-color:rgba(239,68,68,0.3);">
+            Reset Progress
+          </button>
+        </div>
+
+        <!-- The Printable Certificate Card -->
+        <div class="certificate-card" id="printable-certificate">
+          <div class="cert-corner cert-top-left"></div>
+          <div class="cert-corner cert-top-right"></div>
+          <div class="cert-corner cert-bot-left"></div>
+          <div class="cert-corner cert-bot-right"></div>
+
+          <img src="assets/images/shield-logo.jpg" alt="Official Seal" class="cert-badge-img">
+          
+          <div class="cert-org">HACKFORGE CYBERSECURITY ACADEMY</div>
+          <h2 class="cert-title">CERTIFICATE OF RECOGNITION</h2>
+          <div class="cert-subtitle">PRACTICAL ETHICAL HACKING & DEFENSIVE RECONNAISSANCE</div>
+
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:8px;">This document certifies that</p>
+          <div class="cert-recipient-name" id="cert-student-name">Alex Mercer</div>
+
+          <p class="cert-body-text">
+            has successfully pledged the Ethical Hacker's Oath and demonstrated proficiency in Web Application Penetration Testing (SQL Injection, XSS), Network Reconnaissance with Kali Linux tools, Cryptographic Analysis, and Secure Remediation.
+          </p>
+
+          <div class="cert-meta-grid">
+            <div>
+              <div style="color:var(--neon-cyan);" id="cert-display-rank">LVL 1 • Cadet Trainee</div>
+              <div>ACADEMIC RANK</div>
+            </div>
+            <div>
+              <div style="color:var(--neon-green);" id="cert-display-xp">0 XP</div>
+              <div>TOTAL SCORE</div>
+            </div>
+            <div>
+              <div style="color:var(--neon-amber);" id="cert-verification-hash">HF-X892-OK4</div>
+              <div>VERIFICATION HASH</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="margin-top:60px; padding:30px 0; border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:0.85rem; color:var(--text-dim);">
+      <div>
+        © 2024-2026 HackForge Academy. Dedicated to ethical education & cybersecurity defense.
+      </div>
+      <div>
+        Authorized Educational Sandbox • Designed with Privacy & Safety
+      </div>
+    </footer>
+
+    <!-- 
+      =====================================================================
+      SECRET DEVELOPER COMMENT FOR CTF CHALLENGE #1 (Recon Rookie):
+      Congratulations on inspecting the DOM! Here is your flag:
+      FLAG{inspect_element_dev_secret_892}
+      Paste this flag into the CTF Arena challenge to claim your 100 XP!
+      =====================================================================
+    -->
+
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/labs.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/ctf.js"></script>
+  <script src="js/curriculum.js"></script>
+  <script src="js/defend.js"></script>
+</body>
+</html>
