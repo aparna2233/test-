@@ -1,0 +1,18 @@
+{
+  "name": "hackforge-academy",
+  "version": "1.0.0",
+  "description": "Interactive ethical hacking and cyber defense learning platform for students",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "cybersecurity",
+    "ethical-hacking",
+    "ctf",
+    "education",
+    "infosec"
+  ],
+  "author": "HackForge Academy",
+  "license": "MIT"
+}
